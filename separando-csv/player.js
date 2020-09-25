@@ -1,8 +1,106 @@
+/** VARIAVEIS CONVERSÃO CSV->JSON */
 var stepped = 0, chunks = 0, rows = 0;
 var start, end;
 var parser;
 var pauseChecked = false;
 var printStepChecked = false;
+
+
+/** --------------------------------
+ *  ----------- FILTRO -------------
+ *  --------------------------------
+ */
+
+let filtro = 10;/** 
+* 8 - pais
+* 10 - latitude
+*/
+let selecao = 4;/**
+* 0 - brasilSemLngLat
+* 1 - brasilComLngLat
+* 2 - exteriorSemLngLat
+* 3 - exteriorComLngLat
+* 4 - semEndereco
+*/
+let por_filtro = false;
+
+function filtroLocal(valor, maxim) {
+	let objetoEmFoco = JSON.parse(valor);
+
+	let jsonFormatado = { data: [] }
+	for (i = 0; i < maxim; i++) {
+		if (por_filtro) {
+			if (objetoEmFoco['data'][i][filtro] != "") {
+				jsonFormatado.data.push(objetoEmFoco['data'][i]);
+			}
+		} else {
+			if (selecao == 0) {
+				if (objetoEmFoco['data'][i][8] == "Brazil") {
+					/** Se o pais for Brasil e não tiver LngLat */
+					if (objetoEmFoco['data'][i][10] == "") {
+						jsonFormatado.data.push(objetoEmFoco['data'][i]);
+					}
+				}
+			}
+			if (selecao == 1) {
+				if (objetoEmFoco['data'][i][8] == "Brazil") {
+					/** Se o pais for Brasil e tiver LngLat */
+					if (objetoEmFoco['data'][i][10] != "") {
+						jsonFormatado.data.push(objetoEmFoco['data'][i]);
+					}
+				}
+			}
+			if (selecao == 2) {
+				if (objetoEmFoco['data'][i][8] != "Brazil"
+					&& objetoEmFoco['data'][i][8] != "") {
+					/** Se o pais não for Brasil e não tiver LngLat */
+					if (objetoEmFoco['data'][i][10] == "") {
+						jsonFormatado.data.push(objetoEmFoco['data'][i]);
+					}
+				}
+			}
+			if (selecao == 3) {
+				if (objetoEmFoco['data'][i][8] != "Brazil"
+					&& objetoEmFoco['data'][i][8] != "") {
+					/** Se o pais não for Brasil e tiver LngLat */
+					if (objetoEmFoco['data'][i][10] != "") {
+						jsonFormatado.data.push(objetoEmFoco['data'][i]);
+					}
+				}
+			}
+			if (selecao == 4) {
+				if (objetoEmFoco['data'][i][8] == "") {
+					/** Se não tiver pais */
+					jsonFormatado.data.push(objetoEmFoco['data'][i]);
+				}
+			}
+		}
+		if (i == maxim - 1) {
+			if (por_filtro) {
+				if (filtro == 8) {
+					/** Pega os dados com pais */
+					saveStaticDataToFile(JSON.stringify(jsonFormatado), 'comlocal');
+				}
+				if (filtro == 10) {
+					/** Pega os dados com lat lgn */
+					saveStaticDataToFile(JSON.stringify(jsonFormatado), 'comlat');
+				}
+			} else {
+				if (selecao == 0) saveStaticDataToFile(JSON.stringify(jsonFormatado), 'brasilSemLngLat');
+				if (selecao == 1) saveStaticDataToFile(JSON.stringify(jsonFormatado), 'brasilComLngLat');
+				if (selecao == 2) saveStaticDataToFile(JSON.stringify(jsonFormatado), 'exteriorSemLngLat');
+				if (selecao == 3) saveStaticDataToFile(JSON.stringify(jsonFormatado), 'exteriorComLngLat');
+				if (selecao == 4) saveStaticDataToFile(JSON.stringify(jsonFormatado), 'semEndereco');
+			}
+		}
+	}
+}
+
+
+/** --------------------------------
+ *  ----------- CSV->JSON ----------
+ *  --------------------------------
+ */
 
 $(function () {
 	$('#submit-parse').click(function () {
@@ -150,13 +248,6 @@ function errorFn(error, file) {
 	console.log("ERROR:", error, file);
 }
 
-function saveStaticDataToFile(texto, nome) {
-	var blob = new Blob([texto],
-		{ type: "application/json" }
-		/*{ type: "text/plain;charset=utf-8" }*/);
-	saveAs(blob, nome + ".json");
-}
-
 function completeFn() {
 	end = performance.now();
 	if (!$('#stream').prop('checked')
@@ -174,68 +265,15 @@ function completeFn() {
 }
 
 
-function filtroLocal(valor, maxim) {
-	let objetoEmFoco = JSON.parse(valor);
-	/** 8 - pais
-	 * 10 - latitude
-	 */
-	let filtro = 10;
-	let jsonFormatado = { data: [] }
-	for (i = 0; i < maxim; i++) {
-		if (i < 10) {
-			console.log(objetoEmFoco['data'][i][filtro]);
-		}
-		if (objetoEmFoco['data'][i][filtro] != "") {
-			jsonFormatado.data.push(objetoEmFoco['data'][i]);
-		}
-		if (i == maxim - 1) {
-			if (filtro == 8) {
-				saveStaticDataToFile(JSON.stringify(jsonFormatado), 'comlocal');
-			}
-			if (filtro == 10) {
-				saveStaticDataToFile(JSON.stringify(jsonFormatado), 'comlat');
-			}
-		}
-	}
-	/**
-	 *  Exemplo de Output
-	 * {
-	   "data":[
-		  "2020-03-23 18:51:14",
-		  "Gaboardi",
-		  "fraslee",
-		  "@BolsonaroSP Cade o fundão deputado??? Congresso está sentado em 3BI olhando a pandemia da janela.",
-		  "0",
-		  "138",
-		  "pt",
-		  "",
-		  "", LOCAL É AQUI
-		  "",
-		  "",
-		  "",
-		  "[]"
-	   ],}
-	   Objetivo data[i][8]
-	 */
+/** --------------------------------
+ *  ----------- EXPORT JSON --------
+ *  --------------------------------
+ */
 
+
+function saveStaticDataToFile(texto, nome) {
+	var blob = new Blob([texto],
+		{ type: "application/json" }
+		/*{ type: "text/plain;charset=utf-8" }*/);
+	saveAs(blob, nome + ".json");
 }
-
-valor = {
-	"data": [
-		"2020-03-23 18:51:14",
-		"Gaboardi",
-		"fraslee",
-		"@BolsonaroSP Cade o fundão deputado??? Congresso está sentado em 3BI olhando a pandemia da janela.",
-		"0",
-		"138",
-		"pt",
-		"",
-		"",
-		"",
-		"",
-		"",
-		"[]"
-	],
-}
-
-console.log(valor['data'][8])
