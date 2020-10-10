@@ -88,3 +88,17 @@ Sendo feita novamente a pesquisa no G1 sobre o dia foi possível encontrar novas
 **Com localização Com “?”**: 12
 
 **Sem Localização com “?"**: 2743
+
+# Conclusão
+
+Quanto aos dados analisados, primeiro foi dado atenção a sua localização para a construção de um mapa e uma interface que facilita-se a leitura, no processo dessa construção a língua portuguesa e todas as suas nuanças se tornaram o maior obstáculos e a formatação da frase para sua interpretação se tornou um processo de constantes revisões que resultaram na compreensão do conteúdo presente e seus spams (citações, poemas, propagandas, assuntos diversos que fogem da proposta). Quando analisado os dados sem localização, jornais, reportagens e ciberataques de com perguntas redundantes se tornaram mais visíveis. Contudo, frases semelhantes porém variando em gênero e número não foram removidas no processo de duplicatas por falta de tempo e conhecimento técnico. 
+
+
+Pelos gráficos de frequência o período de Abril até Junho foram os mais ativos na rede social analisada, fatores para isso incluem o isolamento social e a quarenta sugerida por diversos estados, mas quando analisados as principais notícias dos dias de pico a atividade de cada datasheet filtrado pode se atribuir esse aumento a “famosos doentes”, “social influencers de direita comprando briga com o STF”, “quantitativo de infectados ou mortes na china pela doença” e “o aumento do número de mortos no país”.
+
+
+O nome da doença e suas variações foram os termos mais utilizados, porém isso não se reflete a qualidade do conteúdo onde as palavras estavam presentes nas frases. Contudo, os dias seguintes que se deram após o. começo de mortes em determinado estado foram os dias que houveram altas nas perguntas sobre prevenção a doença.
+
+# Agradecimentos
+
+Graças ao trabalho desenvolvido foi perceptível a dificuldade do trabalho de interpretação de  grandes volumes de dados e da importância que as ferramentas como colab, github e as bibliotecas Pandas e Matplotlib têm no auxilio desse processo como um todo. Os autores dessa pesquisa agradecem a oportunidade do curso de especialização em Ciência de Dados cedido pela Universidade Estadual do Amazonas (UEA) e do aprendizado obtido graças aos professores doutores Elloa Guedes e Tiago Mello.
