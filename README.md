@@ -2,6 +2,9 @@
 
 Devido à rápida propagação da doença COVID-19 no mundo, as plataformas de mídias sociais como Twitter, Facebook e Instagram tornaram-se locais onde ocorre uma intensa e contínua troca de informações entre diversas partes e grupos sociais da sociedade. O seguinte trabalho se propõem analisar e tratar dados obtidos na rede social twitter para melhor compreensão da opinião pública nos meses iniciais.
 
+### Url do Arquivo Collab
+    https://colab.research.google.com/drive/1EIv0p2M9gol_P1DWvtcLyDpq022a79-8?usp=sharing
+
 ## Equipe do projeto
 
 O projeto foi feito pela dupla de alunos Emily Bezerra Sales (ebs.cid20@uea.edu.br) e Emiliandro Carlos de Moraes Firmino (ecdmf.cid20@uea.edu.br) para o módulo de Programação ministrada pelo Prof. Dr. Tiago Eugenio de Melo (tmelo@uea.edu.br).
